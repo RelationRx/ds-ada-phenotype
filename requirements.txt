@@ -1,0 +1,7 @@
+numpy==1.21.0
+pandas==1.3.5
+relation_data_lake.egg==info
+scikit_learn==1.1.1
+scipy==1.8.0
+statsmodels==0.13.2
+tqdm==4.50.2
