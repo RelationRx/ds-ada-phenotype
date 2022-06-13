@@ -3,8 +3,8 @@ from multiprocessing import Pool
 import numpy as np
 from tqdm import tqdm
 
-from ..tools.data_loading import get_lincs
-from ..tools.metrics import vectorized_DEG_crosstab_distance
+from tools.data_loading import get_lincs
+from tools.metrics import vectorized_DEG_crosstab_distance
 
 if __name__ == "__main__":
     import argparse
@@ -14,6 +14,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-n",
         default=3,
+        type=int,
         help="trinary or binary contingency matrix - defaults to 3",
     )
     parser.add_argument(
