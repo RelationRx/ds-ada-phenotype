@@ -1,16 +1,17 @@
 import numpy as np
 
 
-def truncate_top_k(x, k):
-    m, _, levs = x.shape
+def truncate_k(x, k, geq=True):
+    m, _ = x.shape
+    rows, _ = np.indices((m, k))
     # get (unsorted) indices of top-k values
-    topk_indices = np.argpartition(x, -k, axis=1)[:, -k:]
+    if geq:
+        k_indices = np.argpartition(x, -k, axis=1)[:, -k:]
+        kth_vals = x[rows, k_indices].min(axis=1)
+        is_kth = x >= kth_vals[:, None]
+    else:
+        k_indices = np.argpartition(x, k, axis=1)[:, :k]
+        kth_vals = x[rows, k_indices].max(axis=1)
+        is_kth = x <= kth_vals[:, None]
 
-    # get k-th value
-    rows, _, levels = np.indices((m, k, levs))
-    kth_vals = x[rows, topk_indices, levels].min(axis=1)
-
-    # get boolean mask of greater smaller than k-th
-    is_geq_than_kth = x >= kth_vals[:, None, :]
-
-    return is_geq_than_kth
+    return is_kth
